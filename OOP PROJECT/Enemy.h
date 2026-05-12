@@ -1,36 +1,41 @@
-#ifndef ENEMY_H
+﻿#ifndef ENEMY_H
 #define ENEMY_H
-
 #include "Entity.h"
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 class Enemy : public Entity
 {
 protected:
-    float speed;                 // Movement speed of enemy
-    int currentPathIndex;        // Current target path point
-
-    sf::Vector2f* pathPoints;    // Path array
-    int pathLength;              // Total path points
+    float speed;
+    float baseSpeed;      // original speed before slow
+    float slowTimer;      // counts down remaining slow duration
+    int currentPathIndex;
+    std::vector<sf::Vector2f> path;
     int hp;
-
-    bool alive;                  // Tracks if enemy is alive
+    int maxHP;
+    bool alive;
+    bool reachedEnd;
 
 public:
     Enemy();
-
-    virtual void update() = 0;
+    virtual void update(float dt) = 0;
     virtual void render(sf::RenderWindow& window) = 0;
+    virtual ~Enemy() {}
 
-    virtual ~Enemy() {};
-
-    void setPath(sf::Vector2f* points, int length);
+    void setPath(const std::vector<sf::Vector2f>& points);
     void setStartPosition(sf::Vector2f start);
+    void takeDamage(int amount);
+    void applySlow(float speedMultiplier, float duration); // used by SlowTower
 
-    void takeDamage(int amount);         // Reduce HP when attacked
-    bool isDead() const;                 // Check if enemy died
+    bool isDead() const;
+    bool hasReachedEnd() const;
+    int  getHP() const;
+    int  getMaxHP() const;
+    int  getPathIndex() const;
+    sf::Vector2f getPosition() const;
 
-    sf::Vector2f getPosition() const;    // Needed for tower targeting
+protected:
+    void updateSlow(float dt); // call this in each subclass update
 };
-
 #endif

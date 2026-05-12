@@ -110,9 +110,13 @@
       <AdditionalLibraryDirectories>C:\Users\Alizey\OneDrive\Desktop\SFML\SFML-2.6.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;
 sfml-window-d.lib
-;sfml-system-d.lib
+;sfml-system-d.lib;
+sfml-audio-d.lib;
 ;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /I "$(ProjectDir)Assets" "$(OutDir)Assets"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -130,11 +134,21 @@ sfml-window-d.lib
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasicEnemy.cpp" />
+    <ClCompile Include="BounceTower.cpp" />
+    <ClCompile Include="BounceTower.h" />
     <ClCompile Include="CannonTower.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FastEnemy.cpp" />
+    <ClCompile Include="FlyingEnemy.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MachineGunTower.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="SlowTower.cpp" />
+    <ClCompile Include="SniperTower.cpp" />
+    <ClCompile Include="StealthEnemy.cpp" />
+    <ClCompile Include="TankEnemy.cpp" />
     <ClCompile Include="Tower.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,7 +156,15 @@ sfml-window-d.lib
     <ClInclude Include="CannonTower.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FastEnemy.h" />
+    <ClInclude Include="FlyingEnemy.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="MachineGunTower.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="SlowTower.h" />
+    <ClInclude Include="SniperTower.h" />
+    <ClInclude Include="StealthEnemy.h" />
+    <ClInclude Include="TankEnemy.h" />
     <ClInclude Include="Tower.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

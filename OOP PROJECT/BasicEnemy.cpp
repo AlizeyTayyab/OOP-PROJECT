@@ -1,62 +1,52 @@
-#include <iostream>
 #include "BasicEnemy.h"
 #include <cmath>
 
 BasicEnemy::BasicEnemy()
 {
-    // initial spawn position
-    position = sf::Vector2f(0, 0);
-
-    health = 100;
-    speed = 2.0f;
+    hp = 100;
+    maxHP = 100;
+    speed = 80.f;
+    baseSpeed = 80.f;
     currentPathIndex = 0;
+    alive = true;
+    reachedEnd = false;
 }
 
-void BasicEnemy::update()
+void BasicEnemy::update(float dt)
 {
-    // stop if no path or finished path
-    if (!pathPoints || currentPathIndex >= pathLength)
-        return;
+    if (!alive || reachedEnd) return;
 
-    // current target point in path
-    sf::Vector2f target = pathPoints[currentPathIndex];
+    updateSlow(dt); // tick slow timer, restore speed if expired
 
-    // direction vector (target - current position)
-    sf::Vector2f direction = target - position;
-
-    // distance to target
-    float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-
-    if (distance == 0)
-        return;
-
-    // if close enough, snap to target and move to next point
-    if (distance < speed)
+    float remaining = speed * dt;
+    while (remaining > 0.f)
     {
-        position = target;
-        currentPathIndex++;
-    }
-    else
-    {
-        // normalize direction
-        direction.x /= distance;
-        direction.y /= distance;
-
-        // move enemy
-        position.x += direction.x * speed;
-        position.y += direction.y * speed;
+        if (path.empty() || currentPathIndex >= (int)path.size())
+        {
+            reachedEnd = true; alive = false; return;
+        }
+        sf::Vector2f target = path[currentPathIndex];
+        sf::Vector2f dir = target - position;
+        float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
+        if (dist == 0.f) { currentPathIndex++; continue; }
+        if (remaining >= dist)
+        {
+            position = target; remaining -= dist; currentPathIndex++;
+        }
+        else
+        {
+            dir.x /= dist; dir.y /= dist;
+            position.x += dir.x * remaining;
+            position.y += dir.y * remaining;
+            remaining = 0.f;
+        }
     }
 }
 
 void BasicEnemy::render(sf::RenderWindow& window)
 {
-    sf::CircleShape shape(10);
+    sf::CircleShape shape(10.f);
     shape.setFillColor(sf::Color::Green);
-
-    // draw at current position
     shape.setPosition(position);
-
     window.draw(shape);
 }
-
-// NEW: allow external access to enemy position

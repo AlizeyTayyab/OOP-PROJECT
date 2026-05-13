@@ -14,15 +14,14 @@ void CannonTower::attack(std::vector<Enemy*>& enemies)
     if (cooldown > 0.f)
         return;
 
-    // find the furthest-along enemy in range (highest path index)
-    // targeting the leading enemy is better strategy than first in array
+    
     Enemy* target = nullptr;
     int    bestIndex = -1;
 
     for (Enemy* enemy : enemies)
     {
-        // skip dead or escaped enemies — they should not be in the list
-        // but guard anyway so a stale pointer never gets hit
+        // skip dead or escaped enemies  they should not be in the list
+
         if (!enemy || enemy->isDead())
             continue;
 

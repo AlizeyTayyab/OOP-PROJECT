@@ -3,7 +3,7 @@
 
 TankEnemy::TankEnemy()
 {
-    hp = 400;      // very high HP — needs many hits
+    hp = 400;      // very high HP  needs many hits
     maxHP = 400;
     speed = 35.f;     // very slow
     currentPathIndex = 0;

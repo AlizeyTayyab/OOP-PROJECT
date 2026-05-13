@@ -224,7 +224,7 @@ void drawTowerShape(sf::RenderWindow& window, sf::Vector2f pos, int sel,
     }
 }
 
-// =========================================================================
+
 int main()
 {
     const int tileSize = 40;
@@ -308,7 +308,7 @@ int main()
     bool  soundEndPlayed = false;
     float ouchCooldown = 0.f;
 
-    // ── Enemy textures ────────────────────────────────────────────────────
+    // ── Enemy textures ────────
     drawLoadingScreen("Loading enemy sprites...");
 
     const string ENEMY_ASSET_PATH =
@@ -326,7 +326,7 @@ int main()
             enemyTex[i].setSmooth(true);
     }
 
-    // ── Tower textures ────────────────────────────────────────────────────
+    // ── Tower textures ──────────────────────
     drawLoadingScreen("Loading tower sprites...");
 
     const string TOWER_ASSET_PATH =
@@ -344,7 +344,7 @@ int main()
             towerTex[i].setSmooth(true);
     }
 
-    // ── Menu background ───────────────────────────────────────────────────
+    // ── Menu background ───────────────
     drawLoadingScreen("Loading menu...");
 
     sf::Texture menuTexture;
@@ -352,7 +352,7 @@ int main()
         "C:/Users/Alizey/source/repos/OOP PROJECT/OOP PROJECT/Assets/Background/Knight.jpg"))
         cerr << "ERROR: menu background not found\n";
 
-    // ── Type-index helpers ────────────────────────────────────────────────
+    // ── Type-index helpers ─────────────
     auto enemyTexIndex = [](Enemy* e) -> int
         {
             if (dynamic_cast<StealthEnemy*>(e)) return 4;
@@ -371,9 +371,9 @@ int main()
             return 4;
         };
 
-    // =====================================================================
+    // ===========================
     // MENU UI
-    // =====================================================================
+    // =================
     int gameState = STATE_MENU;
     int selectedMap = 0;
 
@@ -624,7 +624,7 @@ int main()
     sf::Vector2f exitPoint, exitPoint2;
     vector<Tower*> towers;
 
-    // ── End-screen ────────────────────────────────────────────────────────
+    // ── End-screen ─────
     sf::RectangleShape endOverlay(sf::Vector2f(winW, winH));
     endOverlay.setFillColor(sf::Color(8, 3, 20, 215));
 
@@ -669,9 +669,9 @@ int main()
 
     sf::Clock clock;
 
-    // =====================================================================
+    
     // MAIN LOOP
-    // =====================================================================
+    
     while (window.isOpen())
     {
         float dt = min(clock.restart().asSeconds(), 0.05f);
@@ -815,7 +815,7 @@ int main()
             }
         }
 
-        // ── GAME LOGIC ────────────────────────────────────────────────────
+        // ── GAME LOGIC 
         if (gameState == STATE_PLAYING && map && game)
         {
             if (!soundEndPlayed)
@@ -965,7 +965,7 @@ int main()
                 btnShape[i].setOutlineColor(
                     i == selectedTower ? BTN_ACCENT[i] : sf::Color::Transparent);
 
-            // ── End-screen layout ─────────────────────────────────────────
+            // ── End-screen layout 
             if (game->isWon() || game->isGameOver())
             {
                 if (game->isWon())
@@ -1015,7 +1015,7 @@ int main()
             }
         }
 
-        // ── DRAW ──────────────────────────────────────────────────────────
+        // ── DRAW 
         window.clear(COL_VOID);
 
         if (gameState == STATE_MENU)

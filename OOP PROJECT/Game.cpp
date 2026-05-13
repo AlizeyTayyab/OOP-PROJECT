@@ -50,7 +50,7 @@ bool Game::isGameOver() const { return lives <= 0; }
 // Win when all waves cleared
 bool Game::isWon() const { return wave > maxWaves; }
 
-// ── Operator overloading implementations ─────────────────────────
+
 
 // prefix ++ — advance wave (e.g. ++game instead of game.nextWave())
 Game& Game::operator++() {

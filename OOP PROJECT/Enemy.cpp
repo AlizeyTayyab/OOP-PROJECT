@@ -36,7 +36,7 @@ void Enemy::applySlow(float speedMultiplier, float duration)
     slowTimer = duration;                    // reset slow timer
 }
 
-// tick slow timer and restore speed when it expires
+// tick slow timer and restore 
 void Enemy::updateSlow(float dt)
 {
     if (slowTimer > 0.f)
